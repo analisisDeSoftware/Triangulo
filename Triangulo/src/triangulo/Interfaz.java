@@ -75,7 +75,7 @@ public class Interfaz extends JFrame {
 		labelResultado.setHorizontalAlignment(SwingConstants.CENTER);
 		labelResultado.setForeground(Color.WHITE);
 		labelResultado.setFont(new Font("Segoe UI", Font.PLAIN, 26));
-		labelResultado.setBounds(0, 262, 657, 37);
+		labelResultado.setBounds(12, 235, 645, 76);
 		contentPane.add(labelResultado);
 
 		JButton btnNewButton = new JButton("Verificar");
@@ -101,7 +101,7 @@ public class Interfaz extends JFrame {
 	public boolean validarEntrada(String cadena) {
 		cadena = cadena.replace(',', '.');
 
-		if (cadena.matches("\\d+(\\.\\d+)?"))
+		if (cadena.matches("\\d+(\\.\\d+)?") && Double.valueOf(cadena) != 0)
 			return true;
 
 		return false;
@@ -120,20 +120,24 @@ public class Interfaz extends JFrame {
 
 				labelResultado.setForeground(Color.GREEN);
 
-				if (lado1 == lado2 && lado1 == lado3)
-					labelResultado.setText("Es un tri�ngulo equil�tero");
-
-				else if (lado1 == lado2 || lado1 == lado3 || lado2 == lado3)
-					labelResultado.setText("Es un tri�ngulo is�sceles");
-
-				else if (lado1 != lado2 && lado1 != lado3 && lado2 != lado3)
-					labelResultado.setText("Es un tri�ngulo escaleno");
-
-				return;
+				if (lado1 == lado2) {
+					if (lado1 == lado3) {
+						labelResultado.setText("Es un triángulo equilátero");						
+					} else {
+						labelResultado.setText("Es un triángulo isósceles");
+					}
+				} else if (lado1 == lado3 || lado2 == lado3) {
+					labelResultado.setText("Es un triángulo isósceles");					
+				} else {
+					labelResultado.setText("Es un triángulo escaleno");
+				}
+			} else {
+				labelResultado.setForeground(Color.RED);
+				labelResultado.setText("No es un triángulo, la suma de dos lados debe ser mayor al tercero");
 			}
+		} else {
+			labelResultado.setForeground(Color.RED);
+			labelResultado.setText("Entrada no válida, debe ingresarse un número mayor a 0");			
 		}
-		
-		labelResultado.setForeground(Color.RED);
-		labelResultado.setText("No es un tri�ngulo");
 	}
 }
